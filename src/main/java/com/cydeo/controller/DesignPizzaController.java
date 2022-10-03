@@ -21,7 +21,7 @@ public class DesignPizzaController {
         this.pizzaRepository = pizzaRepository;
     }
 
-    @GetMapping
+    @GetMapping // localhost:8080/design
     public String showDesignForm(Model model) {
         model.addAttribute("pizza",new Pizza ());
         model.addAttribute("cheeses", DataGenerator.cheeseTypeList);
@@ -32,7 +32,7 @@ public class DesignPizzaController {
 
     }
 
-    @PostMapping("/createPizza")
+    @PostMapping("/createPizza") // localhost:8080/design/createPizza
     public String processPizza(Pizza pizza) {
 
         pizza.setId(UUID.randomUUID());

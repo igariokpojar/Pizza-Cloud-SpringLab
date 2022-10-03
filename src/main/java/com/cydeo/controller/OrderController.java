@@ -6,10 +6,7 @@ import com.cydeo.model.PizzaOrder;
 import com.cydeo.repository.PizzaRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
@@ -24,11 +21,11 @@ public class OrderController {
     }
 
     @GetMapping("/current")
-    public String orderForm(UUID pizzaId, Model model) {
+    public String orderForm(@RequestParam UUID pizzaId, Model model) {
 
         PizzaOrder pizzaOrder = new PizzaOrder();
 
-        pizzaOrder.setPizza(getPizza(pizzaId));
+        pizzaOrder.setPizza(getPizza(pizzaId)); // set the pizza for pizza order
 
         model.addAttribute("pizzaOrder", pizzaOrder);
 
@@ -43,11 +40,11 @@ public class OrderController {
     }
 
     //TODO
-    private Pizza getPizza(UUID pizzaId) {
+    private Pizza getPizza(UUID pizzaId) throws PizzaNotFoundException{
         // Get the pizza from repository based on it's id
         return pizzaRepository.readAll().stream()
                 .filter(pizza -> pizza.getId()
-                        .equals(pizzaId)).findAny().orElseThrow(()-> new PizzaNotFoundException("pizza not found"));
+                        .equals(pizzaId)).findAny().orElseThrow(()-> new PizzaNotFoundException("Pizza not found"));
     }
 
 }
